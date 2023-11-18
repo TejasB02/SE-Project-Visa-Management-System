@@ -15,6 +15,11 @@ CREATE TABLE visa_types (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO visa_types (name, description) VALUES
+  ('Tourist Visa', 'for Tourist Visa'),
+  ('Business Visa', 'for Business Visa'),
+  ('Student Visa', 'for Student Visa');
+
 -- Create visa_requirements table
 CREATE TABLE visa_requirements (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -72,14 +77,13 @@ CREATE TABLE notifications (
   FOREIGN KEY (application_id) REFERENCES visa_applications (id)
 );
 
--- Create visa_application_documents table
 CREATE TABLE visa_application_documents (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   visa_application_id INT NOT NULL,
   document_name VARCHAR(255) NOT NULL,
   document_type VARCHAR(255) NOT NULL,
   document_size INT NOT NULL,
-  document_data BLOB NOT NULL,
+  document_data LONGBLOB NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (visa_application_id) REFERENCES visa_applications (id)
