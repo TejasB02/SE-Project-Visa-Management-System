@@ -1,110 +1,79 @@
--- Create the database if it doesn't exist
-IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'VISAMANAGEMENT')
-BEGIN
-    CREATE DATABASE VISAMANAGEMENT;
-END
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visa Application Form</title>
+    <link rel="stylesheet" type="text/css" href="design.css">
+</head>
+<body>
+    <h1>Visa Application Form</h1>
 
-USE VISAMANAGEMENT;
+    <form action="http://localhost:3000/visa_applications" method="post" id="visaApplicationForm">
+        <label for="applicantName">Applicant Name:</label>
+        <input type="text" id="applicantName" name="applicantName" required><br>
 
--- Create visa_types table
-CREATE TABLE visa_types (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+        <label for="visa_type">Select Visa Type:</label>
+        <select id="visa_type" name="visa_type">
+            <option value="1">Tourist Visa</option>
+            <option value="2">Business Visa</option>
+            <option value="3">Student Visa</option>
+            <!-- Add more options as needed -->
+        </select><br>
 
-INSERT INTO visa_types (name, description) VALUES
-  ('Tourist Visa', 'for Tourist Visa'),
-  ('Business Visa', 'for Business Visa'),
-  ('Student Visa', 'for Student Visa');
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br>
 
--- Create visa_requirements table
-CREATE TABLE visa_requirements (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  visa_type_id INT NOT NULL,
-  requirement VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (visa_type_id) REFERENCES visa_types (id)
-);
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br>
 
--- Create visa_applicants table
-CREATE TABLE visa_applicants (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  passport_number VARCHAR(20) UNIQUE,
-  date_of_birth DATE,
-  nationality VARCHAR(50),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+        <label for="passport_number">Passport Number:</label>
+        <input type="text" id="passport_number" name="passport_number" required><br>
 
--- Create visa_applications table
-CREATE TABLE visa_applications (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  visa_type_id INT NOT NULL,
-  applicant_id INT NOT NULL,
-  application_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  application_status VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (visa_type_id) REFERENCES visa_types (id),
-  FOREIGN KEY (applicant_id) REFERENCES visa_applicants (id)
-);
+        <label for="date_of_birth">Date of Birth:</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" required><br>
 
--- Create payments table
-CREATE TABLE payments (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  application_id INT NOT NULL,
-  payment_amount DECIMAL(10, 2) NOT NULL,
-  payment_date DATE NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (application_id) REFERENCES visa_applications (id)
-);
+        <label for="nationality">Nationality:</label>
+        <input type="text" id="nationality" name="nationality" required><br>
 
--- Create notifications table
-CREATE TABLE notifications (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  application_id INT NOT NULL,
-  notification_type VARCHAR(50) NOT NULL,
-  notification_date DATE NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (application_id) REFERENCES visa_applications (id)
-);
+        <label for="application_status">Application Status:</label>
+        <select id="application_status" name="application_status">
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            <option value="In Progress">In Progress</option>
+        </select><br>
 
-CREATE TABLE visa_application_documents (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  visa_application_id INT NOT NULL,
-  document_name VARCHAR(255) NOT NULL,
-  document_type VARCHAR(255) NOT NULL,
-  document_size INT NOT NULL,
-  document_data LONGBLOB NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (visa_application_id) REFERENCES visa_applications (id)
-);
+        <label for="application_date">Application Date:</label>
+        <input type="date" id="application_date" name="application_date" required><br>
 
--- Create consulates table
-CREATE TABLE consulates (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  consulate_name VARCHAR(100) NOT NULL,
-  location VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+        <label for="document_name">Document Name:</label>
+        <input type="text" id="document_name" name="document_name" required><br>
 
--- Create consular_officers table
-CREATE TABLE consular_officers (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  consulate_id INT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (consulate_id) REFERENCES consulates (id)
-);
+        <label for="document_type">Document Type:</label>
+        <input type="text" id="document_type" name="document_type" required><br>
+
+        <input type="file" id="document_data" name="document_data" accept=".pdf, .jpeg, .jpg" required><br>
+
+        <label for="consulate_name">Select Consulate:</label>
+        <select id="consulate_name" name="consulate_name">
+            <option value="1">Consulate 1</option>
+            <option value="2">Consulate 2</option>
+            <!-- Add more options as needed -->
+        </select><br>
+
+        <label for="first_name_officer">Officer First Name:</label>
+        <input type="text" id="first_name_officer" name="first_name_officer" required><br>
+
+        <label for="last_name_officer">Officer Last Name:</label>
+        <input type="text" id="last_name_officer" name="last_name_officer" required><br>
+
+        <!-- Add other form fields based on your database schema -->
+
+        <input type="submit" value="Submit Application">
+    </form>
+
+    <!-- Reference the JavaScript file -->
+    <script src="visaApplication.js"></script>
+</body>
+</html>
