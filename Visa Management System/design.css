@@ -1,0 +1,119 @@
+body, html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('background.gif') center/cover no-repeat;
+    color: #fff;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(123, 137, 138, 0.48); /* Dark background */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Light shadow for depth */
+    border-radius: 10px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #fff;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+select {
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1); /* Dark background for dropdown */
+    color: #fff; /* White text for dropdown options */
+    -webkit-appearance: none; /* Remove default arrow in Chrome/Safari */
+    appearance: none;
+    padding-right: 30px; /* Add space for custom arrow */
+    border: none;
+}
+
+/* Custom arrow for select dropdown */
+select::after {
+    content: '▼';
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+/* Style the dropdown list */
+select option {
+    background-color: #1e2d2e; /* Dark background for dropdown list */
+    color: #fff; /* White text for dropdown options */
+}
+
+
+input:focus,
+select:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+input[type="submit"],
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Add more styles based on your preferences */
+
+/* Adjust styles for status messages */
+#statusMessage {
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Dark mode toggle (optional) */
+.dark-mode-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #fff;
+}
